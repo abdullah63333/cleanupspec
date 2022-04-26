@@ -278,7 +278,7 @@ def benchCheckpoints(options, maxtick, cptdir):
 
         exit_event = m5.simulate(maxtick - m5.curTick())
         exit_cause = exit_event.getCause()
-
+    
     return exit_event
 
 # Set up environment for taking SimPoint checkpoints
@@ -676,7 +676,7 @@ def run(options, root, testsys, cpu_class):
             print "Simulation ends instruction count:%d" % \
                     (testsys.switch_cpus_1[0].max_insts_any_thread)
             m5.switchCpus(testsys, switch_cpu_list1)
-
+    
     # If we're taking and restoring checkpoints, use checkpoint_dir
     # option only for finding the checkpoints to restore from.  This
     # lets us test checkpointing by restoring from one set of
@@ -714,10 +714,13 @@ def run(options, root, testsys, cpu_class):
         if options.repeat_switch and maxtick > options.repeat_switch:
             exit_event = repeatSwitch(testsys, repeat_switch_cpu_list,
                                       maxtick, options.repeat_switch)
+            
         else:
             exit_event = benchCheckpoints(options, maxtick, cptdir)
-
+            print '11111111'
+    print '2222222'
     print 'Exiting @ tick %i because %s' % (m5.curTick(), exit_event.getCause())
+    
     if options.checkpoint_at_end:
         m5.checkpoint(joinpath(cptdir, "cpt.%d"))
 
