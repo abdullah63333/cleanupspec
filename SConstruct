@@ -365,6 +365,12 @@ if main['GCC'] or main['CLANG']:
     main.Append(CCFLAGS=['-Werror',
                          '-Wno-error=deprecated-declarations',
                          '-Wno-error=deprecated',
+                         '-Wno-error=cast-function-type',
+                         '-Wno-error=deprecated-copy',
+                         '-Wno-error=class-memaccess',
+                         '-Wno-error=implicit-fallthrough',
+                         '-Wno-error=stringop-truncation',
+                         '-Wno-error=address-of-packed-member',
                         ])
 else:
     print termcap.Yellow + termcap.Bold + 'Error' + termcap.Normal,
@@ -431,7 +437,7 @@ if main['GCC']:
     # qualifiers, so play it safe and keep only what comes before
     # the first hyphen
     as_version = as_version_raw[-1].split('-')[0] if as_version_raw else None
-
+    '''
     if not as_version or compareVersions(as_version, "2.23") < 0:
         print termcap.Yellow + termcap.Bold + \
             'Warning: This combination of gcc and binutils have' + \
@@ -439,7 +445,7 @@ if main['GCC']:
             '         If you encounter build problems, please update ' + \
             'binutils to 2.23.' + \
             termcap.Normal
-
+    '''
     # Make sure we warn if the user has requested to compile with the
     # Undefined Benahvior Sanitizer and this version of gcc does not
     # support it.
