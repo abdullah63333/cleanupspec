@@ -62,7 +62,7 @@ from common import CpuConfig
 from common import MemConfig
 from common.Caches import *
 from common.cpu2000 import *
-
+from common import Scheme
 # Check if KVM support has been enabled, we might need to do VM
 # configuration if that's the case.
 have_kvm_support = 'BaseKvmCPU' in globals()
@@ -124,7 +124,7 @@ def get_processes(options):
 parser = optparse.OptionParser()
 Options.addCommonOptions(parser)
 Options.addSEOptions(parser)
-
+Scheme.add_CC_Options(parser)
 if '--ruby' in sys.argv:
     Ruby.define_options(parser)
 
@@ -249,6 +249,7 @@ for i in xrange(np):
 
     system.cpu[i].createThreads()
 
+
 if options.ruby:
     Ruby.create_system(options, False, system)
     assert(options.num_cpus == len(system.ruby._cpu_ports))
@@ -279,9 +280,11 @@ else:
     CacheConfig.config_cache(options, system)
     MemConfig.config_mem(options, system)
 
-# [InvisiSpec] Configure simulation scheme
+#  Configure simulation scheme
 if CPUClass == DerivO3CPU:
-    CpuConfig.config_scheme(CPUClass, system.cpu, options)
+    Scheme.scheme_config_cpu(CPUClass, system.cpu, options)
+    for i in xrange(np):
+        system.cpu[i].branchPred=LTAGE()
 
 root = Root(full_system = False, system = system)
 Simulation.run(options, root, system, FutureClass)
