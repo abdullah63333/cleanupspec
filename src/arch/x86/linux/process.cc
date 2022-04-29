@@ -62,7 +62,7 @@ unameFunc(SyscallDesc *desc, int callnum, Process *process,
 
     strcpy(name->sysname, "Linux");
     strcpy(name->nodename, "sim.gem5.org");
-    strcpy(name->release, "3.0.0");
+    strcpy(name->release, "5.13.0");
     strcpy(name->version, "#1 Mon Aug 18 11:32:15 EDT 2003");
     strcpy(name->machine, "x86_64");
 
@@ -237,7 +237,7 @@ static SyscallDesc syscallDescs64[] = {
     /*  14 */ SyscallDesc("rt_sigprocmask", ignoreFunc, SyscallDesc::WarnOnce),
     /*  15 */ SyscallDesc("rt_sigreturn", unimplementedFunc),
     /*  16 */ SyscallDesc("ioctl", ioctlFunc<X86Linux64>),
-    /*  17 */ SyscallDesc("pread64", unimplementedFunc),
+    /*  17 */ SyscallDesc("pread64", pread64Func<X86Linux64>),
     /*  18 */ SyscallDesc("pwrite64", pwrite64Func<X86Linux64>),
     /*  19 */ SyscallDesc("readv", unimplementedFunc),
     /*  20 */ SyscallDesc("writev", writevFunc<X86Linux64>),
@@ -522,7 +522,7 @@ static SyscallDesc syscallDescs64[] = {
     /* 299 */ SyscallDesc("recvmmsg", unimplementedFunc),
     /* 300 */ SyscallDesc("fanotify_init", unimplementedFunc),
     /* 301 */ SyscallDesc("fanotify_mark", unimplementedFunc),
-    /* 302 */ SyscallDesc("prlimit64", unimplementedFunc),
+    /* 302 */ SyscallDesc("prlimit64", prlimitFunc<X86Linux64>),
     /* 303 */ SyscallDesc("name_to_handle_at", unimplementedFunc),
     /* 304 */ SyscallDesc("open_by_handle_at", unimplementedFunc),
     /* 305 */ SyscallDesc("clock_adjtime", unimplementedFunc),
@@ -729,8 +729,8 @@ static SyscallDesc syscallDescs32[] = {
     /* 177 */ SyscallDesc("rt_sigtimedwait", unimplementedFunc),
     /* 178 */ SyscallDesc("rt_sigqueueinfo", unimplementedFunc),
     /* 179 */ SyscallDesc("rt_sigsuspend", unimplementedFunc),
-    /* 180 */ SyscallDesc("pread64", unimplementedFunc),
-    /* 181 */ SyscallDesc("pwrite64", unimplementedFunc),
+    /* 180 */ SyscallDesc("pread64", pread64Func<X86Linux64>),
+    /* 181 */ SyscallDesc("pwrite64", pwrite64Func<X86Linux64>),
     /* 182 */ SyscallDesc("chown", unimplementedFunc),
     /* 183 */ SyscallDesc("getcwd", getcwdFunc),
     /* 184 */ SyscallDesc("capget", unimplementedFunc),
